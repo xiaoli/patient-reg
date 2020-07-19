@@ -3,7 +3,10 @@ Deployment
 ==========
 virtualenv venv
 source venv/bin/activate
-
 pip install -r requirements.txt
 
-python venv/bin/django-admin.py startproject patient_reg [Only needed for creating new project]
+[Only needed for creating new project]
+python venv/bin/django-admin.py startproject patient_reg
+python manage.py startapp patients
+python manage.py migrate
+python manage.py createsuperuser
