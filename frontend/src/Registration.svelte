@@ -1,7 +1,8 @@
 <script>
-  let email = "";
-  let isLoading = false;
-  let isSuccess = false;
+  let isViewing = true;
+  let isSubmitSuccess = false;
+  let isSubmitFail = false;
+
   export let submit;
   let errors = {};
   async function handleSubmit(event) {
@@ -37,10 +38,19 @@
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data)
+        // console.log(data)
+        if (data.status == "ok")
+        {
+            isViewing = false;
+            isSubmitSuccess = true;
+            isSubmitFail = false;
+        }
     })
     .catch(error => {
-        console.error(error)
+        // console.error(error)
+        isViewing = false;
+        isSubmitSuccess = false;
+        isSubmitFail = true;
     })
   };
 </script>
@@ -164,6 +174,7 @@ body {
           <div class="card-img-left d-none d-md-flex">
              <!-- Background image for card set in CSS! -->
           </div>
+          {#if isViewing}
           <div class="card-body">
             <h5 class="card-title text-center">Registration</h5>
             <form class="form-signin" on:submit|preventDefault="{handleSubmit}">
@@ -218,6 +229,24 @@ body {
               
             </form>
           </div>
+          {/if}
+
+          {#if isSubmitSuccess}
+          <div id="reg-info-box" class="card-body">
+            <div class="alert alert-primary" role="alert">
+                You've made an appointment. Thanks.
+            </div>
+          </div>
+          {/if}
+
+          {#if isSubmitFail}
+          <div id="reg-info-box" class="card-body">
+            <div class="alert alert-danger" role="alert">
+                Some errors occurred.
+            </div>
+          </div>
+          {/if}
+
         </div>
       </div>
     </div>
