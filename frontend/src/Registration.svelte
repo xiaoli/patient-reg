@@ -5,9 +5,6 @@
   export let submit;
   let errors = {};
   async function handleSubmit(event) {
-    console.log(event);
-    console.log(event.target);
-
     event.preventDefault();
 
     let first_name = event.target.inputFirstName.value;
@@ -18,7 +15,6 @@
     let dueTime = event.target.inputDueDate.value;
 
     let files = event.target.inputPhotoID.files;
-    console.log(files);
     if (! (files && files[0])) {
         return;
     }
@@ -29,21 +25,26 @@
     console.log(email);
     console.log(photoFile);
 
-    const res = await fetch('http://localhost:8000/api/v1/register/', {
+    let data = new FormData();
+    data.append('file', photoFile);
+    data.append('first_name', 'first_name');
+    data.append('last_name', 'last_name');
+    data.append('date_of_birth', 'date_of_birth');
+    data.append('email', 'email');
+    data.append('address', 'address');
+    data.append('dueTime', 'dueTime');
+
+    const res = fetch('http://localhost:8000/api/v1/register/', {
         method: 'POST',
-        body: JSON.stringify({
-            first_name,
-            last_name,
-            date_of_birth,
-            email,
-            address,
-            dueTime,
-            photoFile
-        })
-    });
-    
-    const json = await res.json();
-    result = JSON.stringify(json);
+        body: data
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+    })
+    .catch(error => {
+        console.error(error)
+    })
   };
 </script>
 
