@@ -104,7 +104,7 @@ body {
 .card-signin .card-title {
   margin-bottom: 2rem;
   font-weight: 300;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .card-signin .card-img-left {
@@ -256,7 +256,7 @@ body {
           </div>
           {#if isViewing}
           <div class="card-body">
-            <h5 class="card-title text-center">Registration</h5>
+            <h5 class="card-title text-center font-weight-bold">Registration</h5>
             <form class="form-signin" on:submit|preventDefault="{handleSubmit}">
               <div class="form-label-group">
                 <input type="text" id="inputFirstName" class="form-control" placeholder="First Name" required>
