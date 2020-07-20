@@ -53,6 +53,12 @@
         isSubmitFail = true;
     })
   };
+
+  function handleBack() {
+    isViewing = true;
+    isSubmitSuccess = false;
+    isSubmitFail = false;
+  }
 </script>
 
 <style>
@@ -236,6 +242,9 @@ body {
             <div class="alert alert-primary" role="alert">
                 You've made an appointment. Thanks.
             </div>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-primary" on:click={handleBack} href="#">Back</a>
+            </div>
           </div>
           {/if}
 
@@ -243,6 +252,9 @@ body {
           <div id="reg-info-box" class="card-body">
             <div class="alert alert-danger" role="alert">
                 Some errors occurred.
+            </div>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-primary" on:click={handleBack} href="#">Back</a>
             </div>
           </div>
           {/if}
