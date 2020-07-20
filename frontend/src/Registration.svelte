@@ -110,7 +110,7 @@ body {
 .card-signin .card-img-left {
   width: 45%;
   /* Link to your background image using in the property below! */
-  background: scroll center url('https://source.unsplash.com/WEQbe2jBg40/414x512');
+  background: scroll center url('https://source.unsplash.com/2xjk8WWLFC4/414x512');  
   background-size: cover;
 }
 
@@ -233,6 +233,17 @@ body {
 #reg-info-box {
     margin: 304px 0;
 }
+
+.btn-register {
+    color: #fff;
+    background-color: #FD2D55;
+    border-color: #FD2D55;
+}
+
+.btn-back {
+    color: #FD2D55;
+    border-color: #FD2D55;
+}
 </style>
 
 
@@ -299,7 +310,7 @@ body {
                 <label class="custom-control-label small" for="agree-tos">I agree to the Terms of Service and Privacy Policy.</label>
               </div>-->
 
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+              <button class="btn btn-lg btn-register btn-block text-uppercase" type="submit">Register</button>
               
             </form>
           </div>
@@ -311,7 +322,7 @@ body {
                 You've made an appointment. Thanks.
             </div>
             <div class="d-flex justify-content-center">
-                <a class="btn btn-outline-primary" on:click={handleBack} href="#">Back</a>
+                <a class="btn btn-back" on:click={handleBack} href="#">Back</a>
             </div>
           </div>
           {/if}
@@ -322,7 +333,7 @@ body {
                 Some errors occurred.
             </div>
             <div class="d-flex justify-content-center">
-                <a class="btn btn-outline-primary" on:click={handleBack} href="#">Back</a>
+                <a class="btn btn-back" on:click={handleBack} href="#">Back</a>
             </div>
           </div>
           {/if}
