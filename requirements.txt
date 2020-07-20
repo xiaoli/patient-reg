@@ -1,2 +1,4 @@
 django
 pillow
+whitenoise
+django-cors-headers

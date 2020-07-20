@@ -8,7 +8,7 @@ class Patient(models.Model):
     email = models.EmailField(max_length=100, null=True)
     address = models.CharField(max_length=200, null=True)
     id_photo = models.ImageField(null=True, blank=True)
-    thumbnail = models.ImageField(null=True, blank=True)
+    due_date = models.DateTimeField(null=True)
     
     # A timestamp representing when this object was created.
     created_at = models.DateTimeField(auto_now_add=True)

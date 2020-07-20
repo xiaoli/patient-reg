@@ -10,8 +10,9 @@
     let first_name = event.target.inputFirstName.value;
     let last_name = event.target.inputLastName.value;
     let date_of_birth = event.target.inputDayOfBirth.value;
+    let phone = event.target.inputPhone.value;
     let email = event.target.inputEmail.value;
-    let address = event.target.inputEmail.value;
+    let address = event.target.inputAddress.value;
     let dueTime = event.target.inputDueDate.value;
 
     let files = event.target.inputPhotoID.files;
@@ -20,19 +21,15 @@
     }
     let photoFile = files[0];
 
-    console.log(date_of_birth);
-    console.log(dueTime);
-    console.log(email);
-    console.log(photoFile);
-
     let data = new FormData();
     data.append('file', photoFile);
-    data.append('first_name', 'first_name');
-    data.append('last_name', 'last_name');
-    data.append('date_of_birth', 'date_of_birth');
-    data.append('email', 'email');
-    data.append('address', 'address');
-    data.append('dueTime', 'dueTime');
+    data.append('first_name', first_name);
+    data.append('last_name', last_name);
+    data.append('date_of_birth', date_of_birth);
+    data.append('phone', phone)
+    data.append('email', email);
+    data.append('address', address);
+    data.append('dueTime', dueTime);
 
     const res = fetch('http://localhost:8000/api/v1/register/', {
         method: 'POST',
@@ -183,6 +180,11 @@ body {
               <div class="form-label-group">
                 <input type="date" id="inputDayOfBirth" class="form-control" placeholder="Date of birth" required autofocus>
                 <label for="inputLastName">Day of birth</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="phone" id="inputPhone" class="form-control" placeholder="Phone" required>
+                <label for="inputPhone">Phone</label>
               </div>
 
               <div class="form-label-group">
