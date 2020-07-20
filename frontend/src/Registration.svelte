@@ -229,6 +229,10 @@ body {
     display: inline-block;
     margin-top: 6px;
 }
+
+#reg-info-box {
+    margin: 304px 0;
+}
 </style>
 
 
