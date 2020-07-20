@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Patient, Appointment
 
 from datetime import datetime
+import dateutil.parser
 
 @csrf_exempt
 def register(request):
@@ -19,24 +20,19 @@ def register(request):
     dueTime = request.POST.get('dueTime')
     photoFile = request.FILES['file']
 
-    print(first_name, last_name, photoFile, date_of_birth, dueTime)
-
     try:
         valid_birth_date = datetime.strptime(request.POST['date_of_birth'], '%Y-%m-%d')
-        #valid_due_time = datetime.strptime(request.POST['dueTime'], '%Y-%m-%dT%H%M')
-        #print(valid_birth_date, valid_due_time)
+        valid_due_time = dateutil.parser.parse(request.POST['dueTime'])
     except ValueError:
         # handle this
-        print("======")
-    
-    print("======999======")
-    print(valid_birth_date)
+        pass
+
     p = Patient(first_name=first_name, last_name=last_name, birth_date=valid_birth_date)
     p.phone_number = phone
     p.email = email
     p.address = address
+    p.due_date = valid_due_time
     id_photo = photoFile
-    print(p.birth_date)
     p.save()
 
     return JsonResponse(response)
