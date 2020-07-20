@@ -171,30 +171,33 @@ body {
   color: #777;
 }
 
-.upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 0 10px 10px 10px;
+    background-color: #DDD;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    opacity: 90%;
 }
 
-.upload-btn {
-  border: 1px solid gray;
-  color: gray;
-  background-color: white;
-  padding: 8px 20px;
-  border-radius: .25rem;
-  font-size: 20px;
-  font-weight: bold;
-  width: 100%;
+.fileUpload input.upload {
+    position: absolute;
+    top:0;
+    right:0;
+    margin:0;
+    padding:0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    height: 100%;
+    text-align: center;
 }
-
-.upload-btn-wrapper input[type=file] {
-  font-size: 60px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-}
+.custom-span{font-family:Arial;font-weight:bold;font-size:50px;color:#FE57A1;}
+#uploadFile{border:none;margin-left:10px;width:200px;}
+.custome-para{font-family:Arial;font-weight:bold;font-size:24px;color:#585858;}
 </style>
 
 
@@ -239,11 +242,12 @@ body {
                 <label for="inputAddress">Address</label>
               </div>
 
-              <hr>
-
-              <div class="form-label-group upload-btn-wrapper">
-                <input type="file" accept="image/*" id="inputPhotoID" class="form-control" placeholder="Photo ID" required>
-                <button class="upload-btn">Upload Photo ID</button>
+              <div class="d-flex justify-content-center">
+              <div class="fileUpload">
+                <span class="custom-span">+</span>
+                <p class="customer-para">Add Photo ID</p>
+                <input type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="Photo ID" required>
+              </div>
               </div>
               
               <div class="form-label-group">
