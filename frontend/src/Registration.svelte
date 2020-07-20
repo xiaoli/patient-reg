@@ -7,8 +7,43 @@
   async function handleSubmit(event) {
     console.log(event);
     console.log(event.target);
-    console.log(event.target.inputEmail.value);
-    console.log(event.target.inputFirstName.value);
+
+    event.preventDefault();
+
+    let first_name = event.target.inputFirstName.value;
+    let last_name = event.target.inputLastName.value;
+    let date_of_birth = event.target.inputDayOfBirth.value;
+    let email = event.target.inputEmail.value;
+    let address = event.target.inputEmail.value;
+    let dueTime = event.target.inputDueDate.value;
+
+    let files = event.target.inputPhotoID.files;
+    console.log(files);
+    if (! (files && files[0])) {
+        return;
+    }
+    let photoFile = files[0];
+
+    console.log(date_of_birth);
+    console.log(dueTime);
+    console.log(email);
+    console.log(photoFile);
+
+    const res = await fetch('http://localhost:8000/api/v1/register/', {
+        method: 'POST',
+        body: JSON.stringify({
+            first_name,
+            last_name,
+            date_of_birth,
+            email,
+            address,
+            dueTime,
+            photoFile
+        })
+    });
+    
+    const json = await res.json();
+    result = JSON.stringify(json);
   };
 </script>
 
@@ -162,7 +197,7 @@ body {
               <hr>
 
               <div class="form-label-group">
-                <input type="file" id="inputPhotoID" class="form-control" placeholder="Photo ID" required>
+                <input type="file" accept="image/*" id="inputPhotoID" class="form-control" placeholder="Photo ID" required>
                 <label for="inputPhotoID">Photo ID</label>
               </div>
               
