@@ -170,6 +170,31 @@ body {
   font-size: 12px;
   color: #777;
 }
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload-btn {
+  border: 1px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: .25rem;
+  font-size: 20px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 60px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
 </style>
 
 
@@ -216,9 +241,9 @@ body {
 
               <hr>
 
-              <div class="form-label-group">
+              <div class="form-label-group upload-btn-wrapper">
                 <input type="file" accept="image/*" id="inputPhotoID" class="form-control" placeholder="Photo ID" required>
-                <label for="inputPhotoID">Photo ID</label>
+                <button class="upload-btn">Upload Photo ID</button>
               </div>
               
               <div class="form-label-group">
