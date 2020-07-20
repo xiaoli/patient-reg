@@ -2,8 +2,9 @@
   let isViewing = true;
   let isSubmitSuccess = false;
   let isSubmitFail = false;
+  let isPreview = false;
 
-  export let submit;
+  let preview_url = "";
   let errors = {};
   async function handleSubmit(event) {
     event.preventDefault();
@@ -58,6 +59,27 @@
     isViewing = true;
     isSubmitSuccess = false;
     isSubmitFail = false;
+  }
+
+  function handleFileChange() {
+      var files = !!this.files ? this.files : [];
+      if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+      if (/^image/.test( files[0].type)) { // only image file
+          var reader = new FileReader(); // instance of the FileReader
+          reader.readAsDataURL(files[0]); // read the local file
+
+          reader.onloadend = function(){ // set image data as background of div
+            isPreview = true;
+            preview_url = this.result;
+          }
+      }
+  }
+
+  function handlePreview() {
+      let fileInputElement = document.getElementByID("inputPhotoID");
+      console.log(fileInputElement);
+      fileInputElement.click();
   }
 </script>
 
@@ -174,12 +196,11 @@ body {
 .fileUpload {
     position: relative;
     overflow: hidden;
-    margin: 0 10px 10px 10px;
-    background-color: #DDD;
-    height: 100px;
-    width: 100px;
+    height:auto;
+    width: 100%;
     text-align: center;
-    opacity: 90%;
+    border: 1px solid #ced4da;
+    border-radius: 2rem;
 }
 
 .fileUpload input.upload {
@@ -198,6 +219,16 @@ body {
 .custom-span{font-family:Arial;font-weight:bold;font-size:50px;color:#FE57A1;}
 #uploadFile{border:none;margin-left:10px;width:200px;}
 .custome-para{font-family:Arial;font-weight:bold;font-size:24px;color:#585858;}
+
+.preview_image {
+    width: 100px;
+    height: 100px;
+    background-position: center center;
+    background-size: cover;
+    -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
+    display: inline-block;
+    margin-top: 6px;
+}
 </style>
 
 
@@ -213,17 +244,17 @@ body {
             <h5 class="card-title text-center">Registration</h5>
             <form class="form-signin" on:submit|preventDefault="{handleSubmit}">
               <div class="form-label-group">
-                <input type="text" id="inputFirstName" class="form-control" placeholder="First Name" required autofocus>
+                <input type="text" id="inputFirstName" class="form-control" placeholder="First Name" required>
                 <label for="inputFirstName">First Name</label>
               </div>
 
               <div class="form-label-group">
-                <input type="text" id="inputLastName" class="form-control" placeholder="Last Name" required autofocus>
+                <input type="text" id="inputLastName" class="form-control" placeholder="Last Name" required>
                 <label for="inputLastName">Last Name</label>
               </div>
 
               <div class="form-label-group">
-                <input type="date" id="inputDayOfBirth" class="form-control" placeholder="Date of birth" required autofocus>
+                <input type="date" id="inputDayOfBirth" class="form-control" placeholder="Date of birth" required>
                 <label for="inputLastName">Day of birth</label>
               </div>
 
@@ -242,12 +273,16 @@ body {
                 <label for="inputAddress">Address</label>
               </div>
 
-              <div class="d-flex justify-content-center">
-              <div class="fileUpload">
-                <span class="custom-span">+</span>
-                <p class="customer-para">Add Photo ID</p>
-                <input type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="Photo ID" required>
-              </div>
+              <div class="d-flex justify-content-center form-label-group">
+                <div class="fileUpload">
+                    {#if isPreview}
+                      <div on:click="{handlePreview}" id="imagePreview" class="preview_image" style="background-image: url({preview_url});"></div>
+                    {:else}
+                      <span class="custom-span">+</span>
+                      <p class="customer-para">Add Photo ID</p>                      
+                    {/if}
+                    <input on:change="{handleFileChange}" type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="Photo ID" required>
+                </div>
               </div>
               
               <div class="form-label-group">
