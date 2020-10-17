@@ -15,12 +15,8 @@ python manage.py migrate
 python manage.py createsuperuser
 
 ### Screentshots
-<img src="https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_frontend-desktop.png" />
-
-<img src="https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_frontend-mobile.png" />
-
-<img src="https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_backend-models.png" />
-
-<img src="https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_backend-models-list.png" />
-
-<img src="https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_backend-models-editing.png" />
+![Desktop Frontend](https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_frontend-desktop.png)
+![Mobile Frontend](https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_frontend-mobile.png)
+![Models Backend](https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_backend-models.png)
+![Models List Backend](https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_backend-models-list.png)
+![Models Editing Backend](https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_backend-models-editing.png)
