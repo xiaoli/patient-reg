@@ -2,17 +2,18 @@
 
 ###### This is demo project for patients registration using Django[https://www.djangoproject.com] and Svelet[https://svelte.dev].
 
+---
+
 ### Deployment
+1. virtualenv venv
+2. source venv/bin/activate
+3. pip install -r requirements.txt
 
-virtualenv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-[Only needed for setup new project]
-python venv/bin/django-admin.py startproject patient_reg
-python manage.py startapp patients
-python manage.py migrate
-python manage.py createsuperuser
+#### [Only needed for setup new project]
+1. python venv/bin/django-admin.py startproject patient_reg
+2. python manage.py startapp patients
+3. python manage.py migrate
+4. python manage.py createsuperuser
 
 ### Screentshots
 ![Desktop Frontend](https://raw.githubusercontent.com/xiaoli/patient-reg/master/screenshots/patient_reg_frontend-desktop.png)
