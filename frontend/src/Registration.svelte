@@ -285,9 +285,9 @@ body {
                 <label for="inputPhone">联系电话</label>
               </div>
               
-              <div class="d-flex justify-content-center form-label-group">
+              <div class="form-label-group">
                   <div class="form-label-group">
-                    <h2><label for="inputLocalPeople">是否常住人口</label></h2>
+                    <h6><label for="inputLocalPeople">是否常住人口</label></h6>
                   </div>
                   <div class="custom-control custom-checkbox">
                     	<input type=radio group={localPeople} name="inputLocalPeople" value={1}>
@@ -299,9 +299,9 @@ body {
                   </div>
               </div>
               
-              <div class="d-flex justify-content-center form-label-group">
+              <div class="form-label-group">
                   <div class="form-label-group">
-                    <h2><label for="inputAntiVirus">是否接种疫苗</label></h2>
+                    <h6><label for="inputAntiVirus">是否接种疫苗</label></h6>
                   </div>
                   <div class="custom-control custom-checkbox">
                     	<input type=radio group={antiVirus} name="inputAntiVirus" value={1}>
@@ -331,11 +331,6 @@ body {
                     {/if}
                     <input on:change="{handleFileChange}" type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="Photo ID" required>
                 </div>
-              </div>
-
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="agree-tos">
-                <label class="custom-control-label small" for="agree-tos">I agree to the Terms of Service and Privacy Policy.</label>
               </div>
 
               <button class="btn btn-lg btn-register btn-block text-uppercase" type="submit">确认提交</button>
