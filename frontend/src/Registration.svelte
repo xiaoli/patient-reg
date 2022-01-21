@@ -3,35 +3,44 @@
   let isSubmitSuccess = false;
   let isSubmitFail = false;
   let isPreview = false;
+  let isNotLocalPeople = false;
+  
+  let localPeopleGroup = 1;
+  let antiVirusGroup = 2;
+  let genderGroup = 3;
 
   let preview_url = "";
   let errors = {};
   async function handleSubmit(event) {
     event.preventDefault();
 
-    let first_name = event.target.inputFirstName.value;
-    let last_name = event.target.inputLastName.value;
-    let date_of_birth = event.target.inputDayOfBirth.value;
+    let name = event.target.inputName.value;
+    let gender = event.target.inputGender.value;
+    let idCardNumber = event.target.inputIdCardNumber.value;
+    let businessAddress = event.target.inputBusinessAddress.value;
     let phone = event.target.inputPhone.value;
-    let email = event.target.inputEmail.value;
-    let address = event.target.inputAddress.value;
-    let dueTime = event.target.inputDueDate.value;
+    let isLocalPeople = event.target.inputLocalPeople.value;
+	let localAddress = event.target.inputLocalAddress.value;
+    let antiVirus = event.target.inputAntiVirus.value;
 
     let files = event.target.inputPhotoID.files;
-    if (! (files && files[0])) {
+    if (! (files && files[0] && files[1])) {
         return;
     }
-    let photoFile = files[0];
+    let file1 = files[0];
+	let file2 = files[1];
 
     let data = new FormData();
-    data.append('file', photoFile);
-    data.append('first_name', first_name);
-    data.append('last_name', last_name);
-    data.append('date_of_birth', date_of_birth);
+    data.append('file1', file1);
+	data.append('file2', file2);
+    data.append('name', name);
+    data.append('gender', gender);
+    data.append('id_card_number', idCardNumber);
     data.append('phone', phone)
-    data.append('email', email);
-    data.append('address', address);
-    data.append('dueTime', dueTime);
+    data.append('business_address', businessAddress);
+	data.append('is_local_people', isLocalPeople);
+    data.append('local_address', localAddress);
+    data.append('anti_virus', antiVirus);
 
     const res = fetch('http://localhost:8000/api/v1/register/', {
         method: 'POST',
@@ -82,8 +91,13 @@
       fileInputElement.click();
   }
   
-  let localPeople = 1;
-  let antiVirus = 2;
+  function handleLocalPeopleClick() {
+  	  isNotLocalPeople = false;
+  }
+  
+  function handleNotLocalPeopleClick() {
+  	  isNotLocalPeople = true;
+  }
 </script>
 
 <style>
@@ -266,23 +280,32 @@ body {
               </div>
 
               <div class="form-label-group">
-                <input type="text" id="inputGender" class="form-control" placeholder="性别" required>
-                <label for="inputGender">性别</label>
-              </div>
-
-              <div class="form-label-group">
-                <input type="text" id="inputID" class="form-control" placeholder="身份证号码" required>
-                <label for="inputID">身份证号码</label>
+                <input type="text" id="inputIdCardNumber" class="form-control" placeholder="身份证号码" required>
+                <label for="inputIdCardNumber">身份证号码</label>
               </div>
               
               <div class="form-label-group">
-                <input type="text" id="inputAddress" class="form-control" placeholder="地址（商城）：中商广场" required>
-                <label for="inputAddress">地址（商城）：中商广场</label>
+                <input type="text" id="inputBusinessAddress" class="form-control" placeholder="地址（商城）：中商广场" required>
+                <label for="inputBusinessAddress">地址（商城）：中商广场</label>
               </div>
 
               <div class="form-label-group">
                 <input type="phone" id="inputPhone" class="form-control" placeholder="联系电话" required>
                 <label for="inputPhone">联系电话</label>
+              </div>
+			  
+              <div class="form-label-group">
+                <div class="form-label-group">
+                  <h6><label for="inputGender">性别</label></h6>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  	<input type=radio group={genderGroup} name="inputGender" value={1} required>
+                  	<label for="inputGender">男</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  	<input type=radio group={genderGroup} name="inputGender" value={2} required>
+                  	<label for="inputGender">女</label>
+                </div>
               </div>
               
               <div class="form-label-group">
@@ -290,12 +313,18 @@ body {
                     <h6><label for="inputLocalPeople">是否常住人口</label></h6>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={localPeople} name="inputLocalPeople" value={1}>
+                    	<input type=radio group={localPeopleGroup} name="inputLocalPeople" value={1} on:click="{handleLocalPeopleClick}" required>
                     	<label for="inputAntiVirus">是</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={localPeople} name="inputLocalPeople" value={2}>
+                    	<input type=radio group={localPeopleGroup} name="inputLocalPeople" value={2} on:click="{handleNotLocalPeopleClick}" required>
                     	<label for="inputAntiVirus">否</label>
+						{#if isNotLocalPeople}
+		                <div class="form-label-group">
+		                  <input type="text" id="inputLocalAddress" class="form-control" placeholder="暂住地址">
+		                  <label for="inputLocalAddress">暂住地址</label>
+		                </div>
+						{/if}
                   </div>
               </div>
               
@@ -304,19 +333,19 @@ body {
                     <h6><label for="inputAntiVirus">是否接种疫苗</label></h6>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={1}>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={1} required>
                     	<label for="inputAntiVirus">否</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={2}>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={2} required>
                     	<label for="inputAntiVirus">完成第一剂次</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={3}>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={3} required>
                     	<label for="inputAntiVirus">完成第一、二剂次</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={4}>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={4} required>
                     	<label for="inputAntiVirus">完成第一、二、三剂次</label>
                   </div>
               </div>
