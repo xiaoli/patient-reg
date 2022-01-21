@@ -81,6 +81,9 @@
       console.log(fileInputElement);
       fileInputElement.click();
   }
+  
+  let localPeople = 1;
+  let antiVirus = 2;
 </script>
 
 <style>
@@ -110,7 +113,7 @@ body {
 .card-signin .card-img-left {
   width: 45%;
   /* Link to your background image using in the property below! */
-  background: scroll center url('https://source.unsplash.com/2xjk8WWLFC4/414x512');  
+  background: scroll center url('/bg.jpeg');  
   background-size: cover;
 }
 
@@ -256,61 +259,87 @@ body {
           </div>
           {#if isViewing}
           <div class="card-body">
-            <h5 class="card-title text-center font-weight-bold">Registration</h5>
+            <h5 class="card-title text-center font-weight-bold">联防联控信息采集</h5>
             <form class="form-signin" on:submit|preventDefault="{handleSubmit}">
               <div class="form-label-group">
-                <input type="text" id="inputFirstName" class="form-control" placeholder="First Name" required>
-                <label for="inputFirstName">First Name</label>
+                <input type="text" id="inputName" class="form-control" placeholder="姓名" required>
+                <label for="inputName">姓名</label>
               </div>
 
               <div class="form-label-group">
-                <input type="text" id="inputLastName" class="form-control" placeholder="Last Name" required>
-                <label for="inputLastName">Last Name</label>
+                <input type="text" id="inputGender" class="form-control" placeholder="性别" required>
+                <label for="inputGender">性别</label>
               </div>
 
               <div class="form-label-group">
-                <input type="date" id="inputDayOfBirth" class="form-control" placeholder="Date of birth" required>
-                <label for="inputLastName">Day of birth</label>
-              </div>
-
-              <div class="form-label-group">
-                <input type="phone" id="inputPhone" class="form-control" placeholder="Phone" required>
-                <label for="inputPhone">Phone</label>
-              </div>
-
-              <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email" required>
-                <label for="inputEmail">Email</label>
+                <input type="text" id="inputID" class="form-control" placeholder="身份证号码" required>
+                <label for="inputID">身份证号码</label>
               </div>
               
               <div class="form-label-group">
-                <input type="text" id="inputAddress" class="form-control" placeholder="Address" required>
-                <label for="inputAddress">Address</label>
+                <input type="text" id="inputAddress" class="form-control" placeholder="地址（商城）：中商广场" required>
+                <label for="inputAddress">地址（商城）：中商广场</label>
               </div>
 
+              <div class="form-label-group">
+                <input type="phone" id="inputPhone" class="form-control" placeholder="联系电话" required>
+                <label for="inputPhone">联系电话</label>
+              </div>
+              
+              <div class="d-flex justify-content-center form-label-group">
+                  <div class="form-label-group">
+                    <h2><label for="inputLocalPeople">是否常住人口</label></h2>
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    	<input type=radio group={localPeople} name="inputLocalPeople" value={1}>
+                    	<label for="inputAntiVirus">是</label>
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    	<input type=radio group={localPeople} name="inputLocalPeople" value={2}>
+                    	<label for="inputAntiVirus">否</label>
+                  </div>
+              </div>
+              
+              <div class="d-flex justify-content-center form-label-group">
+                  <div class="form-label-group">
+                    <h2><label for="inputAntiVirus">是否接种疫苗</label></h2>
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={1}>
+                    	<label for="inputAntiVirus">否</label>
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={2}>
+                    	<label for="inputAntiVirus">完成第一剂次</label>
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={3}>
+                    	<label for="inputAntiVirus">完成第一、二剂次</label>
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={4}>
+                    	<label for="inputAntiVirus">完成第一、二、三剂次</label>
+                  </div>
+              </div>
+              
               <div class="d-flex justify-content-center form-label-group">
                 <div class="fileUpload">
                     {#if isPreview}
                       <div on:click="{handlePreview}" id="imagePreview" class="preview_image" style="background-image: url({preview_url});"></div>
                     {:else}
                       <span class="custom-span">+</span>
-                      <p class="customer-para">Add Photo ID</p>                      
+                      <p class="customer-para">上传健康码和行程码</p>                      
                     {/if}
                     <input on:change="{handleFileChange}" type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="Photo ID" required>
                 </div>
               </div>
-              
-              <div class="form-label-group">
-                <input type="datetime-local" id="inputDueDate" class="form-control" placeholder="Appointment Date & Time" required>
-                <label for="inputDueDate">Appointment Date & Time</label>
-              </div>
 
-              <!--<div class="custom-control custom-checkbox">
+              <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="agree-tos">
                 <label class="custom-control-label small" for="agree-tos">I agree to the Terms of Service and Privacy Policy.</label>
-              </div>-->
+              </div>
 
-              <button class="btn btn-lg btn-register btn-block text-uppercase" type="submit">Register</button>
+              <button class="btn btn-lg btn-register btn-block text-uppercase" type="submit">确认提交</button>
               
             </form>
           </div>
@@ -319,10 +348,10 @@ body {
           {#if isSubmitSuccess}
           <div id="reg-info-box" class="card-body">
             <div class="alert alert-primary" role="alert">
-                You've made an appointment. Thanks.
+                您已经成功上传信息，谢谢合作。
             </div>
             <div class="d-flex justify-content-center">
-                <a class="btn btn-back" on:click={handleBack} href="#">Back</a>
+                <a class="btn btn-back" on:click={handleBack} href="#">返回</a>
             </div>
           </div>
           {/if}
@@ -330,10 +359,10 @@ body {
           {#if isSubmitFail}
           <div id="reg-info-box" class="card-body">
             <div class="alert alert-danger" role="alert">
-                Some errors occurred.
+                出现了一些错误，请返回检查。
             </div>
             <div class="d-flex justify-content-center">
-                <a class="btn btn-back" on:click={handleBack} href="#">Back</a>
+                <a class="btn btn-back" on:click={handleBack} href="#">返回</a>
             </div>
           </div>
           {/if}
