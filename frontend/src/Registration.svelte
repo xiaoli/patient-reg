@@ -215,7 +215,6 @@ body {
     font-size: 20px;
     cursor: pointer;
     opacity: 0;
-    filter: alpha(opacity=0);
     height: 100%;
     text-align: center;
 }
