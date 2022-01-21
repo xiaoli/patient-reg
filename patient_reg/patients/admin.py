@@ -14,6 +14,11 @@ class AppointmentAdmin(admin.ModelAdmin):
 
     get_patient_name.admin_order_field  = 'patient'  #Allows column order sorting
     get_patient_name.short_description = 'Patient Name'  #Renames column head
+    
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('name', 'id_card_number', 'phone_number', 'business_address')
+    ordering = ['-created_at', '-updated_at']
 
 admin.site.register(Patient, PatientAdmin)
+admin.site.register(Person, PersonAdmin)
 admin.site.register(Appointment, AppointmentAdmin)

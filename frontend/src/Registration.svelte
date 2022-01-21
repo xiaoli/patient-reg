@@ -3,6 +3,7 @@
   let isSubmitSuccess = false;
   let isSubmitFail = false;
   let isPreview = false;
+  let isPreview2 = false;
   let isNotLocalPeople = false;
   
   let localPeopleGroup = 1;
@@ -10,6 +11,7 @@
   let genderGroup = 3;
 
   let preview_url = "";
+  let preview_url2 = "";
   let errors = {};
   async function handleSubmit(event) {
     event.preventDefault();
@@ -20,15 +22,25 @@
     let businessAddress = event.target.inputBusinessAddress.value;
     let phone = event.target.inputPhone.value;
     let isLocalPeople = event.target.inputLocalPeople.value;
-	let localAddress = event.target.inputLocalAddress.value;
-    let antiVirus = event.target.inputAntiVirus.value;
+	
+	let localAddress = "";
+	if (event.target.inputLocalAddress) {
+		localAddress = event.target.inputLocalAddress.value;
+	}
+    
+	let antiVirus = event.target.inputAntiVirus.value;
 
     let files = event.target.inputPhotoID.files;
-    if (! (files && files[0] && files[1])) {
+    if (! (files && files[0])) {
         return;
     }
     let file1 = files[0];
-	let file2 = files[1];
+	
+    let files2 = event.target.inputPhotoID2.files;
+    if (! (files2 && files2[0])) {
+        return;
+    }
+	let file2 = files2[0];
 
     let data = new FormData();
     data.append('file1', file1);
@@ -84,9 +96,30 @@
           }
       }
   }
+  
+  function handleFileChange2() {
+      var files = !!this.files ? this.files : [];
+      if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+      if (/^image/.test( files[0].type)) { // only image file
+          var reader = new FileReader(); // instance of the FileReader
+          reader.readAsDataURL(files[0]); // read the local file
+
+          reader.onloadend = function(){ // set image data as background of div
+            isPreview2 = true;
+            preview_url2 = this.result;
+          }
+      }
+  }
 
   function handlePreview() {
       let fileInputElement = document.getElementByID("inputPhotoID");
+      console.log(fileInputElement);
+      fileInputElement.click();
+  }
+  
+  function handlePreview2() {
+      let fileInputElement = document.getElementByID("inputPhotoID2");
       console.log(fileInputElement);
       fileInputElement.click();
   }
@@ -356,9 +389,21 @@ body {
                       <div on:click="{handlePreview}" id="imagePreview" class="preview_image" style="background-image: url({preview_url});"></div>
                     {:else}
                       <span class="custom-span">+</span>
-                      <p class="customer-para">上传健康码和行程码</p>                      
+                      <p class="customer-para">上传健康码</p>
                     {/if}
-                    <input on:change="{handleFileChange}" type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="Photo ID" required>
+                    <input on:change="{handleFileChange}" type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="健康码" required>
+                </div>
+			  </div>
+              
+              <div class="d-flex justify-content-center form-label-group">
+			    <div class="fileUpload">
+                    {#if isPreview2}
+                      <div on:click="{handlePreview2}" id="imagePreview2" class="preview_image" style="background-image: url({preview_url2});"></div>
+                    {:else}
+                      <span class="custom-span">+</span>
+                      <p class="customer-para">上传行程码</p>
+                    {/if}
+					<input on:change="{handleFileChange2}" type="file" accept="image/*" id="inputPhotoID2" class="upload" placeholder="行程码" required>
                 </div>
               </div>
 			  

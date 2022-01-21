@@ -21,3 +21,23 @@ class Patient(models.Model):
 class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     due_date = models.DateTimeField()
+    
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    gender = models.CharField(max_length=100)
+    id_card_number = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=30, null=True, db_index=True)
+    business_address = models.CharField(max_length=200, null=True)
+    is_local_people = models.CharField(max_length=20, null=True)
+    local_address = models.CharField(max_length=200, null=True)
+    anti_virus = models.CharField(max_length=20, null=True)
+    health_photo = models.ImageField(null=True, blank=True)
+    travel_photo = models.ImageField(null=True, blank=True)
+    
+    # A timestamp representing when this object was created.
+    created_at = models.DateTimeField(auto_now_add=True)
+    # A timestamp reprensenting when this object was last updated.
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return ('%s - %s %s' % self.pk, self.name, self.id_card_number)
