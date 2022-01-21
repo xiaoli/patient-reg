@@ -294,7 +294,7 @@ body {
                 <label for="inputPhone">联系电话</label>
               </div>
 			  
-              <div class="form-label-group">
+              <div class="form-label-group form-check">
                 <div class="form-label-group">
                   <h6><label for="inputGender">性别</label></h6>
                 </div>
@@ -308,7 +308,7 @@ body {
                 </div>
               </div>
               
-              <div class="form-label-group">
+              <div class="form-label-group form-check">
                   <div class="form-label-group">
                     <h6><label for="inputLocalPeople">是否常住人口</label></h6>
                   </div>
@@ -328,7 +328,7 @@ body {
                   </div>
               </div>
               
-              <div class="form-label-group">
+              <div class="form-label-group form-check">
                   <div class="form-label-group">
                     <h6><label for="inputAntiVirus">是否接种疫苗</label></h6>
                   </div>
@@ -361,8 +361,10 @@ body {
                     <input on:change="{handleFileChange}" type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="Photo ID" required>
                 </div>
               </div>
-
-              <button class="btn btn-lg btn-register btn-block text-uppercase" type="submit">确认提交</button>
+			  
+			  <div class="d-grid gap-2">
+              	  <button class="btn btn-lg btn-primary btn-register btn-block text-uppercase" type="submit">确认提交</button>
+			  </div>
               
             </form>
           </div>
