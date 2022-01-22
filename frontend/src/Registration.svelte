@@ -332,11 +332,11 @@ body {
                   <h6><label for="inputGender">性别</label></h6>
                 </div>
                 <div class="custom-control custom-checkbox">
-                  	<input type=radio group={genderGroup} name="inputGender" value={1} required>
+                  	<input type=radio group={genderGroup} name="inputGender" value={"男"} required>
                   	<label for="inputGender">男</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                  	<input type=radio group={genderGroup} name="inputGender" value={2} required>
+                  	<input type=radio group={genderGroup} name="inputGender" value={"女"} required>
                   	<label for="inputGender">女</label>
                 </div>
               </div>
@@ -346,11 +346,11 @@ body {
                     <h6><label for="inputLocalPeople">是否常住人口</label></h6>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={localPeopleGroup} name="inputLocalPeople" value={1} on:click="{handleLocalPeopleClick}" required>
+                    	<input type=radio group={localPeopleGroup} name="inputLocalPeople" value={"是"} on:click="{handleLocalPeopleClick}" required>
                     	<label for="inputAntiVirus">是</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={localPeopleGroup} name="inputLocalPeople" value={2} on:click="{handleNotLocalPeopleClick}" required>
+                    	<input type=radio group={localPeopleGroup} name="inputLocalPeople" value={"否"} on:click="{handleNotLocalPeopleClick}" required>
                     	<label for="inputAntiVirus">否</label>
 						{#if isNotLocalPeople}
 		                <div class="form-label-group">
@@ -366,19 +366,19 @@ body {
                     <h6><label for="inputAntiVirus">是否接种疫苗</label></h6>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={1} required>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={"否"} required>
                     	<label for="inputAntiVirus">否</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={2} required>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={"第一剂次"} required>
                     	<label for="inputAntiVirus">完成第一剂次</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={3} required>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={"第一、二剂次"} required>
                     	<label for="inputAntiVirus">完成第一、二剂次</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={4} required>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={"第一、二、三剂次"} required>
                     	<label for="inputAntiVirus">完成第一、二、三剂次</label>
                   </div>
               </div>
