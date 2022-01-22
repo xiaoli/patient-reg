@@ -24,7 +24,7 @@ from patients import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     #url(r'^api/v1/', patients.urls),
-    path(r'^api/v1/register/', views.register, name='api_register'),
+    path(r'api/v1/register/', views.register, name='api_register'),
 ]
 
 if settings.DEBUG:

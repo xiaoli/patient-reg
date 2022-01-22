@@ -6,43 +6,32 @@ from django.core.files.storage import FileSystemStorage
 from datetime import datetime
 import dateutil.parser
 
-from .models import Patient, Appointment
+from .models import Patient, Appointment, Person
 
 @csrf_exempt
 def register(request):
     response = {'status':'ok'}
     
     # recieving form data
-    first_name = request.POST.get('first_name')
-    last_name = request.POST.get('last_name')
-    date_of_birth = request.POST.get('date_of_birth')
-    email = request.POST.get('email')
+    name = request.POST.get('name')
+    gender = request.POST.get('gender')
+    id_card_number = request.POST.get('id_card_number')
     phone = request.POST.get('phone')
-    address = request.POST.get('address')
-    dueTime = request.POST.get('dueTime')
-    photoFile = request.FILES['file']
-
-    # handing date & time data
-    try:
-        valid_birth_date = datetime.strptime(request.POST['date_of_birth'], '%Y-%m-%d')
-        valid_due_time = dateutil.parser.parse(request.POST['dueTime'])
-    except ValueError:
-        # handle this
-        pass
-
-    # handing photo ID
-    photo_file = photoFile
-    #fs = FileSystemStorage()
-    #filename = fs.save(id_photo.name, photo_id_file)
-    #uploaded_file_url = fs.url(filename)
+    business_address = request.POST.get('business_address')
+    is_local_people = request.POST.get('is_local_people')
+    local_address = request.POST.get('local_address')
+    anti_virus = request.POST.get('anti_virus')
+    file1 = request.FILES['file1']
+    file2 = request.FILES['file2']
 
     # saving Patient object
-    p = Patient(first_name=first_name, last_name=last_name, birth_date=valid_birth_date)
-    p.phone_number = phone
-    p.email = email
-    p.address = address
-    p.due_date = valid_due_time
-    p.id_photo = photo_file
+    p = Person(name=name, gender=gender, id_card_number=id_card_number, 
+              phone_number=phone, business_address=business_address,
+              is_local_people=is_local_people, local_address=local_address,
+              anti_virus=anti_virus
+              )
+    p.health_photo = file1
+    p.travel_photo = file2
     p.save()
 
     return JsonResponse(response)

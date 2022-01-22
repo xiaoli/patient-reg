@@ -3,35 +3,56 @@
   let isSubmitSuccess = false;
   let isSubmitFail = false;
   let isPreview = false;
+  let isPreview2 = false;
+  let isNotLocalPeople = false;
+  
+  let localPeopleGroup = 1;
+  let antiVirusGroup = 2;
+  let genderGroup = 3;
 
   let preview_url = "";
+  let preview_url2 = "";
   let errors = {};
   async function handleSubmit(event) {
     event.preventDefault();
 
-    let first_name = event.target.inputFirstName.value;
-    let last_name = event.target.inputLastName.value;
-    let date_of_birth = event.target.inputDayOfBirth.value;
+    let name = event.target.inputName.value;
+    let gender = event.target.inputGender.value;
+    let idCardNumber = event.target.inputIdCardNumber.value;
+    let businessAddress = event.target.inputBusinessAddress.value;
     let phone = event.target.inputPhone.value;
-    let email = event.target.inputEmail.value;
-    let address = event.target.inputAddress.value;
-    let dueTime = event.target.inputDueDate.value;
+    let isLocalPeople = event.target.inputLocalPeople.value;
+	
+	let localAddress = "";
+	if (event.target.inputLocalAddress) {
+		localAddress = event.target.inputLocalAddress.value;
+	}
+    
+	let antiVirus = event.target.inputAntiVirus.value;
 
     let files = event.target.inputPhotoID.files;
     if (! (files && files[0])) {
         return;
     }
-    let photoFile = files[0];
+    let file1 = files[0];
+	
+    let files2 = event.target.inputPhotoID2.files;
+    if (! (files2 && files2[0])) {
+        return;
+    }
+	let file2 = files2[0];
 
     let data = new FormData();
-    data.append('file', photoFile);
-    data.append('first_name', first_name);
-    data.append('last_name', last_name);
-    data.append('date_of_birth', date_of_birth);
+    data.append('file1', file1);
+	data.append('file2', file2);
+    data.append('name', name);
+    data.append('gender', gender);
+    data.append('id_card_number', idCardNumber);
     data.append('phone', phone)
-    data.append('email', email);
-    data.append('address', address);
-    data.append('dueTime', dueTime);
+    data.append('business_address', businessAddress);
+	data.append('is_local_people', isLocalPeople);
+    data.append('local_address', localAddress);
+    data.append('anti_virus', antiVirus);
 
     const res = fetch('http://localhost:8000/api/v1/register/', {
         method: 'POST',
@@ -75,6 +96,21 @@
           }
       }
   }
+  
+  function handleFileChange2() {
+      var files = !!this.files ? this.files : [];
+      if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+      if (/^image/.test( files[0].type)) { // only image file
+          var reader = new FileReader(); // instance of the FileReader
+          reader.readAsDataURL(files[0]); // read the local file
+
+          reader.onloadend = function(){ // set image data as background of div
+            isPreview2 = true;
+            preview_url2 = this.result;
+          }
+      }
+  }
 
   function handlePreview() {
       let fileInputElement = document.getElementByID("inputPhotoID");
@@ -82,8 +118,19 @@
       fileInputElement.click();
   }
   
-  let localPeople = 1;
-  let antiVirus = 2;
+  function handlePreview2() {
+      let fileInputElement = document.getElementByID("inputPhotoID2");
+      console.log(fileInputElement);
+      fileInputElement.click();
+  }
+  
+  function handleLocalPeopleClick() {
+  	  isNotLocalPeople = false;
+  }
+  
+  function handleNotLocalPeopleClick() {
+  	  isNotLocalPeople = true;
+  }
 </script>
 
 <style>
@@ -215,7 +262,6 @@ body {
     font-size: 20px;
     cursor: pointer;
     opacity: 0;
-    filter: alpha(opacity=0);
     height: 100%;
     text-align: center;
 }
@@ -267,57 +313,72 @@ body {
               </div>
 
               <div class="form-label-group">
-                <input type="text" id="inputGender" class="form-control" placeholder="性别" required>
-                <label for="inputGender">性别</label>
-              </div>
-
-              <div class="form-label-group">
-                <input type="text" id="inputID" class="form-control" placeholder="身份证号码" required>
-                <label for="inputID">身份证号码</label>
+                <input type="text" id="inputIdCardNumber" class="form-control" placeholder="身份证号码" required>
+                <label for="inputIdCardNumber">身份证号码</label>
               </div>
               
               <div class="form-label-group">
-                <input type="text" id="inputAddress" class="form-control" placeholder="地址（商城）：中商广场" required>
-                <label for="inputAddress">地址（商城）：中商广场</label>
+                <input type="text" id="inputBusinessAddress" class="form-control" placeholder="地址（商城）：中商广场" required>
+                <label for="inputBusinessAddress">地址（商城）：中商广场</label>
               </div>
 
               <div class="form-label-group">
                 <input type="phone" id="inputPhone" class="form-control" placeholder="联系电话" required>
                 <label for="inputPhone">联系电话</label>
               </div>
+			  
+              <div class="form-label-group form-check">
+                <div class="form-label-group">
+                  <h6><label for="inputGender">性别</label></h6>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  	<input type=radio group={genderGroup} name="inputGender" value={"男"} required>
+                  	<label for="inputGender">男</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  	<input type=radio group={genderGroup} name="inputGender" value={"女"} required>
+                  	<label for="inputGender">女</label>
+                </div>
+              </div>
               
-              <div class="d-flex justify-content-center form-label-group">
+              <div class="form-label-group form-check">
                   <div class="form-label-group">
-                    <h2><label for="inputLocalPeople">是否常住人口</label></h2>
+                    <h6><label for="inputLocalPeople">是否常住人口</label></h6>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={localPeople} name="inputLocalPeople" value={1}>
+                    	<input type=radio group={localPeopleGroup} name="inputLocalPeople" value={"是"} on:click="{handleLocalPeopleClick}" required>
                     	<label for="inputAntiVirus">是</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={localPeople} name="inputLocalPeople" value={2}>
+                    	<input type=radio group={localPeopleGroup} name="inputLocalPeople" value={"否"} on:click="{handleNotLocalPeopleClick}" required>
                     	<label for="inputAntiVirus">否</label>
+						{#if isNotLocalPeople}
+		                <div class="form-label-group">
+		                  <input type="text" id="inputLocalAddress" class="form-control" placeholder="暂住地址">
+		                  <label for="inputLocalAddress">暂住地址</label>
+		                </div>
+						{/if}
                   </div>
               </div>
               
-              <div class="d-flex justify-content-center form-label-group">
+              <div class="form-label-group form-check">
                   <div class="form-label-group">
-                    <h2><label for="inputAntiVirus">是否接种疫苗</label></h2>
+                    <h6><label for="inputAntiVirus">是否接种疫苗</label></h6>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={1}>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={"否"} required>
                     	<label for="inputAntiVirus">否</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={2}>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={"第一剂次"} required>
                     	<label for="inputAntiVirus">完成第一剂次</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={3}>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={"第一、二剂次"} required>
                     	<label for="inputAntiVirus">完成第一、二剂次</label>
                   </div>
                   <div class="custom-control custom-checkbox">
-                    	<input type=radio group={antiVirus} name="inputAntiVirus" value={4}>
+                    	<input type=radio group={antiVirusGroup} name="inputAntiVirus" value={"第一、二、三剂次"} required>
                     	<label for="inputAntiVirus">完成第一、二、三剂次</label>
                   </div>
               </div>
@@ -328,18 +389,27 @@ body {
                       <div on:click="{handlePreview}" id="imagePreview" class="preview_image" style="background-image: url({preview_url});"></div>
                     {:else}
                       <span class="custom-span">+</span>
-                      <p class="customer-para">上传健康码和行程码</p>                      
+                      <p class="customer-para">上传健康码</p>
                     {/if}
-                    <input on:change="{handleFileChange}" type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="Photo ID" required>
+                    <input on:change="{handleFileChange}" type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="健康码" required>
+                </div>
+			  </div>
+              
+              <div class="d-flex justify-content-center form-label-group">
+			    <div class="fileUpload">
+                    {#if isPreview2}
+                      <div on:click="{handlePreview2}" id="imagePreview2" class="preview_image" style="background-image: url({preview_url2});"></div>
+                    {:else}
+                      <span class="custom-span">+</span>
+                      <p class="customer-para">上传行程码</p>
+                    {/if}
+					<input on:change="{handleFileChange2}" type="file" accept="image/*" id="inputPhotoID2" class="upload" placeholder="行程码" required>
                 </div>
               </div>
-
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="agree-tos">
-                <label class="custom-control-label small" for="agree-tos">I agree to the Terms of Service and Privacy Policy.</label>
-              </div>
-
-              <button class="btn btn-lg btn-register btn-block text-uppercase" type="submit">确认提交</button>
+			  
+			  <div class="d-grid gap-2">
+              	  <button class="btn btn-lg btn-primary btn-register btn-block text-uppercase" type="submit">确认提交</button>
+			  </div>
               
             </form>
           </div>
