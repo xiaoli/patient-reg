@@ -30,21 +30,19 @@
     
 	let antiVirus = event.target.inputAntiVirus.value;
 
+    let data = new FormData();
     let files = event.target.inputPhotoID.files;
-    if (! (files && files[0])) {
-        return;
+    if ((files && files[0])) {
+        let file1 = files[0];
+        data.append('file1', file1);
     }
-    let file1 = files[0];
 	
     let files2 = event.target.inputPhotoID2.files;
-    if (! (files2 && files2[0])) {
-        return;
+    if ((files2 && files2[0])) {
+        let file2 = files[0];
+        data.append('file2', file2);
     }
-	let file2 = files2[0];
-
-    let data = new FormData();
-    data.append('file1', file1);
-	data.append('file2', file2);
+    
     data.append('name', name);
     data.append('gender', gender);
     data.append('id_card_number', idCardNumber);
@@ -54,7 +52,7 @@
     data.append('local_address', localAddress);
     data.append('anti_virus', antiVirus);
 
-    const res = fetch('http://localhost:8000/api/v1/register/', {
+    const res = fetch('http://139.198.125.188:8000/api/v1/register/', {
         method: 'POST',
         body: data
     })
@@ -391,7 +389,7 @@ body {
                       <span class="custom-span">+</span>
                       <p class="customer-para">上传健康码</p>
                     {/if}
-                    <input on:change="{handleFileChange}" type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="健康码" required>
+                    <input on:change="{handleFileChange}" type="file" accept="image/*" id="inputPhotoID" class="upload" placeholder="健康码">
                 </div>
 			  </div>
               
@@ -403,7 +401,7 @@ body {
                       <span class="custom-span">+</span>
                       <p class="customer-para">上传行程码</p>
                     {/if}
-					<input on:change="{handleFileChange2}" type="file" accept="image/*" id="inputPhotoID2" class="upload" placeholder="行程码" required>
+					<input on:change="{handleFileChange2}" type="file" accept="image/*" id="inputPhotoID2" class="upload" placeholder="行程码">
                 </div>
               </div>
 			  
