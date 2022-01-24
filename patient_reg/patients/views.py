@@ -21,8 +21,6 @@ def register(request):
     is_local_people = request.POST.get('is_local_people')
     local_address = request.POST.get('local_address')
     anti_virus = request.POST.get('anti_virus')
-    file1 = request.FILES['file1']
-    file2 = request.FILES['file2']
 
     # saving Patient object
     p = Person(name=name, gender=gender, id_card_number=id_card_number, 
@@ -30,8 +28,11 @@ def register(request):
               is_local_people=is_local_people, local_address=local_address,
               anti_virus=anti_virus
               )
-    p.health_photo = file1
-    p.travel_photo = file2
+    if request.FILES:
+        file1 = request.FILES['file1']
+        file2 = request.FILES['file2']
+        p.health_photo = file1
+        p.travel_photo = file2
     p.save()
 
     return JsonResponse(response)
