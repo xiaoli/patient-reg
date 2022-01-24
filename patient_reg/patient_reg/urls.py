@@ -19,12 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 
-from patients import views
+from patients import views, urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #url(r'^api/v1/', patients.urls),
     path(r'api/v1/register/', views.register, name='api_register'),
+    path(r'download/', views.download, name='download'),
 ]
 
 if settings.DEBUG:
